@@ -203,6 +203,44 @@ Similarly, saturation function for angular velocity is:\\
 \end{equation}
 where $\omega _{max}$ is the boid's maximum velocity.\\
 
+\section{Energy Constraint}
+An energy constraint, is needed in the model to make it realistic as the birds cannot run for an infinite amount of time. This contraint also makes the bird's movement finite, because when energy becomes zero, all the forces turn to zero. The formula for this is defined as:
+\begin{equation}
+E _{i} (t) = E _{i,0} - c _{E} \cdot \int_{0}^{t _{1}} v _{i} (t)^2 dt   
+\end{equation}
+where E _{i,0} is the bird's initial velocity, c_{E} is a constant that is related to bird's mass and v _{i}(t) is the translational velocity of agent i at time t which lies in the interval [0,t_{1}] where t_{1} is the length of the simulation. Assumption made here is that the energy consumption is directly proportional to the square of the translational velocity of the bird.
+
+\section{Different forces to consider}
+
+\subsection{Flocking Force}
+For the flock to stay together, there is a force needed to hold the birds together. 
+This is done by taking the position of the agent's center of mass,  and have an attractive force acting towards it. This forces is the reason for flocking (see fig). This force is a weak force and only acts when birds sense no danger.
+\begin{equation}
+    {f_{i,fl}} = c_{fl} \cdot ({z_{mc}-z_{i}})
+\end{equation}
+\begin{equation}
+    z_{mc}=\sum_{i=0}^{n}\dfrac{z_{i}}{n}
+\end{equation}
+where cfl is the overall magnitude of the force.\\ \\ 
+\begin{center}
+\includegraphics[scale=0.4]{fig9.png} 
+\end{center}
+
+
+
+\subsection{Predator Avoidance Force}
+The flocking behaviour is affected when an bird faces danger, in our case;
+caused by a predator. The members senses the presence of the predator. If the predator is closer than the predator detection distance i.e., Rd then only this force comes into act (see fig) .The most effective strategy to avoid predators was found to be the following equation which takes all attacking predators, pk into account:
+\begin{equation}
+    f_{i,pa} = \sum_{k:|{z_{i}-p_{k}}|<R_{d}}^{} c_{pa} \cdot \dfrac{1}{1+\exp{\omega_{pa}(|{z_{i}-p_{k})-R_{pa}} + 0.3
+\end{equation}
+
+where c_{pa} and \omega _{pa} gives the force's magnitude and gradient respectively.
+\begin{center}
+\includegraphics[scale=0.4]{fig3.png} 
+\end{center}
+
+\pagebreak
 
 
 \end{document}
