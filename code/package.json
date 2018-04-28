@@ -31,7 +31,7 @@
       "mocha": true
     }
   },
-  "dev-dependencies": {
+  "devDependencies": {
     "electron": "^1.8.4"
   },
   "author": "Sunil Kumar, Anubhav Palway",
