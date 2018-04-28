@@ -2,6 +2,8 @@
 \usepackage[utf8]{inputenc}
 \usepackage{verbatim}
 \usepackage{hyperref}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
 % \usepackage{titlesec}
 \usepackage{amsmath}
 \usepackage{graphicx}
@@ -133,7 +135,11 @@ The course and speed could of course be represented by a equivalent velocity vec
 
 \subsection{Cohesion}
 
-Steer to move toward the average position of local flockmates.[2] Cohesion is the rule that keeps the flock together, without it there would not be any flocking at all. Algorithm 2 shows how this algorithm could be implemented, it finds the average position of the neighbourhood boids and tries to move the boid towards it.
+Steer to move toward the average position of local flockmates.[2] Cohesion is the rule that keeps the flock together, without it there would not be any flocking at all. Algorithm 2 shows how this algorithm could be implemented, it finds the average position of the neighbourhood boids and tries to move the boid towards it.\\
+
+\begin{center}
+\includegraphics[scale=0.4]{cohesion.png} 
+\end{center}
 
 \begin{algorithm}
 \caption{First Rule: Cohesion}\label{euclid}
@@ -155,7 +161,11 @@ Steer to move toward the average position of local flockmates.[2] Cohesion is th
 
 \subsection{Separation}
 
-Steer to avoid crowding local flockmates.[3] If a flocking behaviour is to be convincing it must also avoid collisions between the boids. This rule attempts steer the boid away from possible collisions. It's important to note that the distance from which the boids start to avoid each other must be less than the distance from each other(due to the cohesion rule). Otherwise no flocks would be formed.
+Steer to avoid crowding local flockmates.[3] If a flocking behaviour is to be convincing it must also avoid collisions between the boids. This rule attempts steer the boid away from possible collisions. It's important to note that the distance from which the boids start to avoid each other must be less than the distance from each other(due to the cohesion rule). Otherwise no flocks would be formed.\\
+
+\begin{center}
+\includegraphics[scale=0.4]{separation.png} 
+\end{center}
 
 \begin{algorithm}
 \caption{Second Rule: Separation}\label{euclid}
@@ -177,7 +187,11 @@ Steer to avoid crowding local flockmates.[3] If a flocking behaviour is to be co
 
 \subsection{Alignment}
 
-Steer towards the average heading of local flockmates.[3] This rule tries to make the boids mimic each other's course and speed. If this rule was not used the boids would bounce around a lot and not form the beautiful flocking patterns that can be seen in real flocks.
+Steer towards the average heading of local flockmates.[3] This rule tries to make the boids mimic each other's course and speed. If this rule was not used the boids would bounce around a lot and not form the beautiful flocking patterns that can be seen in real flocks.\\
+
+\begin{center}
+\includegraphics[scale=0.4]{alignment.png} 
+\end{center}
 
 \begin{algorithm}
 \caption{Third Rule: Alignment}\label{euclid}
@@ -214,7 +228,11 @@ Raynolds original implementation simply defined the neighbors as the boids
 within a certain radius. Another possible definition of the neighbourhood is to let
 each boid look at the N closest boids instead. This thesis attempts to compare the
 two definitions to find strengths and weaknesses in both definitions and find under
-what circumstances either is superior.
+what circumstances either is superior.\\
+
+\begin{center}
+\includegraphics[scale=0.4]{neighbour.png} 
+\end{center}
 
 \section{Mathematics}
 
@@ -296,7 +314,7 @@ where c_{pa} and \omega _{pa} gives the force's magnitude and gradient respectiv
 2) Craig W. Reynolds. Boids, Background and Update . http://www.red3d.com/ cwr/boids/, 2007. [Online; accessed 14-April-2011]. \\
 3) \href{http://www.red3d.com/cwr/steer/gdc99/}{http://www.red3d.com/cwr/steer/gdc99/}\\
 4) \href{http://cp3-origins.dk/a/14187}{http://cp3-origins.dk/a/14187}\\
-5) \href{https://en.wikipedia.org/wiki/Flocking_(behavior)}{https://en.wikipedia.org/wiki/Flocking_(behavior)}
+5) \href{https://en.wikipedia.org/wiki/Flocking_(behavior)}{https://en.wikipedia.org/wiki/Flocking_(behavior)}\\
 6) \href{https://en.wikipedia.org/wiki/Boids}{https://en.wikipedia.org/wiki/Boids}\\
 7) \href{http://www.csc.kth.se/utbildning/kandidatexjobb/datateknik/2011/rapport/erneholm_carl-oscar_K11044.pdf}{http://www.csc.kth.se/utbildning/kandidatexjobb/datateknik/2011/rapport/erneholm_carl-oscar_K11044.pdf}
 
