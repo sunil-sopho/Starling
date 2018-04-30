@@ -10,9 +10,18 @@
 	<br><output for=bcount id=bCountLabel>100</output>
 	<br><input type="range" min=0 max=200 id=bCount value=100 name="">
 </div>
+<!-- standard variable declarations -->
 <script type="text/javascript">
-	var camera, scene, renderer;
+	
+	var bCount=100
+
+</script>
+<script type="text/javascript">
+var camera, scene, renderer;
+// test for cube
 var geometry, material, mesh;
+// boids vars
+var bodis;
 
 init();
 animate();
@@ -24,11 +33,11 @@ function init() {
 
 	scene = new THREE.Scene();
 
-	geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
-	material = new THREE.MeshNormalMaterial();
+	// geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
+	// material = new THREE.MeshNormalMaterial();
 
-	mesh = new THREE.Mesh( geometry, material );
-	scene.add( mesh );
+	// mesh = new THREE.Mesh( geometry, material );
+	// scene.add( mesh );
 
 	renderer = new THREE.WebGLRenderer( { antialias: true } );
 	renderer.setSize( window.innerWidth, window.innerHeight );
@@ -46,7 +55,18 @@ function animate() {
 	renderer.render( scene, camera );
 
 }
-	
+
+var loadBoids = () =>{
+	boids = [];
+	loader = THREE.JSONLoader();
+	loader.load('model/point.json',function(geo){
+		THREE.GeometryUtils.centre(geometry)
+		Geo = geometry
+		material = new THREE.MeshNormalMaterial({color: 0x4444c})
+
+	});
+}
+
 </script>
 Let Simulation starts.
 </body>
