@@ -34,7 +34,7 @@ function init() {
 	clock = new THREE.Clock();
 	scene = new THREE.Scene();
 
-	geometry = new THREE.BoxGeometry( 0.2, 0.2, 0.2 );
+	geometry = new THREE.SphereGeometry( 0.5, 0.2, 0.2 );
 	material = new THREE.MeshNormalMaterial();
 
 	mesh = new THREE.Mesh( geometry, material );
@@ -50,9 +50,18 @@ function init() {
 	stats.domElement.style.right = '0px';
 	stats.domElement.style.bottom = '0px';
 	document.body.appendChild(stats.domElement);
-
+	// addContext();
 	animate();
 
+}
+
+function addContext() {
+	var cubeGeometry = new THREE.SphereGeometry(1, 1, 1);
+	var dashMaterial = new THREE.LineDashedMaterial( { color: 0xffffff, dashSize: 2, gapSize: 3 } );
+	
+	var cube = new THREE.Line(geo2line(cubeGeometry), dashMaterial, THREE.LinePieces);
+	cube.position.set(0, 0, 0);
+	scene.add(cube);
 }
 
 function animate() {
