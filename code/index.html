@@ -2,8 +2,41 @@
 <html>
 <head>
 	<title>Starling</title>
+			<script type='text/javascript' > 
+  			var sepFac = 1; 
+  			var cohFac = 0.7;
+  			var aliFac = 1.6;
+  			var tarFac = 0.3;
+  			
+  			var sharkSepFac = 5;
+  			var sharkCohFac = 0.01;
+  			var sharkAliFac = 0.01;
+  			
+  			var sepDist = 10;
+  			var sharkSepDist = sepDist * 2;
+  			var cohDist = 25;
+  			var aliDist = 15;
+  			
+  			var maxSpeed = .5;
+  			var sharkMaxSpeed = maxSpeed * 3;
+  			var maxForce = 0.003;
+  			var sharkMaxForce = maxForce * 3;
+  			
+  			var boidCount = 200, sharkCount = 2;
+  			
+		</script>
 	<script type="text/javascript" src="js/three.min.js"></script>
 	<script type="text/javascript" src="js/stats.js"></script>
+		<script src="js/OrbitControls.js"></script>
+		<script src="js/Detector.js"></script>
+		<script src="js/FirstPersonControls.js"></script>
+		<script src="js/KeyboardState.js"></script>
+		<script src="js/Projector.js"></script>
+		<script src="js/THREEx.FullScreen.js"></script>
+		
+		<script src="js/Vector.js"></script>
+		<script src="js/Boid.js"></script>
+	<script type="text/javascript" src="js/functions.js"></script>
 </head>
 <body>
 <div id ="menu">
@@ -23,16 +56,25 @@ var camera, scene, renderer,clock;
 var geometry, material, mesh;
 // boids vars
 var bodis,stats;
+var controls, loader;
+
+var boids, sharks, bgroup, sgroup, target, targetvel, goahead, keyboard;
+
+var boidGeometry, boidMaterial, sharkGeometry, sharkMaterial;
 
 init();
 render();
 
 function init() {
 
-	camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.01, 10 );
+	camera = new THREE.PerspectiveCamera( 70, window.innerWidth / window.innerHeight, 0.1, 1000 );
+	trackingShark = false;
+	trackingBoid = false;
+	mouse = new THREE.Vector2();
 	camera.position.z = 1;
 	clock = new THREE.Clock();
 	scene = new THREE.Scene();
+		count = 0;
 
 	geometry = new THREE.SphereGeometry( 0.5, 0.2, 0.2 );
 	material = new THREE.MeshNormalMaterial();
@@ -55,44 +97,44 @@ function init() {
 
 }
 
-function addContext() {
-	var cubeGeometry = new THREE.SphereGeometry(1, 1, 1);
-	var dashMaterial = new THREE.LineDashedMaterial( { color: 0xffffff, dashSize: 2, gapSize: 3 } );
+// function addContext() {
+// 	var cubeGeometry = new THREE.SphereGeometry(1, 1, 1);
+// 	var dashMaterial = new THREE.LineDashedMaterial( { color: 0xffffff, dashSize: 2, gapSize: 3 } );
 	
-	var cube = new THREE.Line(geo2line(cubeGeometry), dashMaterial, THREE.LinePieces);
-	cube.position.set(0, 0, 0);
-	scene.add(cube);
-}
+// 	var cube = new THREE.Line(geo2line(cubeGeometry), dashMaterial, THREE.LinePieces);
+// 	cube.position.set(0, 0, 0);
+// 	scene.add(cube);
+// }
 
 function animate() {
 
 	requestAnimationFrame( animate );
 
-	mesh.rotation.x += 0.01;
-	mesh.rotation.y += 0.02;
+	// mesh.rotation.x += 0.01;
+	// mesh.rotation.y += 0.02;
 
 	// renderer.render( scene, camera );
 	render()
 
 }
 
-function render() {
-	var delta = clock.getDelta();
-	renderer.render(scene, camera);
+// function render() {
+// 	var delta = clock.getDelta();
+// 	renderer.render(scene, camera);
 
-	stats.update();
-}
+// 	stats.update();
+// }
 
-var loadBoids = () =>{
-	boids = [];
-	loader = THREE.JSONLoader();
-	loader.load('model/point.json',function(geo){
-		THREE.GeometryUtils.centre(geometry)
-		Geo = geometry
-		material = new THREE.MeshNormalMaterial({color: 0x4444c})
+// var loadBoids = () =>{
+// 	boids = [];
+// 	loader = THREE.JSONLoader();
+// 	loader.load('model/point.json',function(geo){
+// 		THREE.GeometryUtils.centre(geometry)
+// 		Geo = geometry
+// 		material = new THREE.MeshNormalMaterial({color: 0x4444c})
 
-	});
-}
+// 	});
+// }
 
 </script>
 <!-- Let Simulation starts. -->
