@@ -1,0 +1,24 @@
+<html><head><meta http-equiv="content-type" content="text/html; charset=utf-8"> <style>
+	.KEYW {color: #933;}
+	.COMM {color: #bbb; font-style: italic;}
+	.NUMB {color: #393;}
+	.STRN {color: #393;}
+	.REGX {color: #339;}
+	.line {border-right: 1px dotted #666; color: #666; font-style: normal;}
+	</style></head><body><pre><span class='line'>  1</span> <span class="KEYW">const</span><span class="WHIT"> </span><span class="NAME">path</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">require</span><span class="PUNC">(</span><span class="STRN">'path'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  2</span> </span><span class="KEYW">const</span><span class="WHIT"> </span><span class="PUNC">{</span><span class="NAME">app</span><span class="PUNC">,</span><span class="NAME">BrowserWindow</span><span class="PUNC">}</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">require</span><span class="PUNC">(</span><span class="STRN">'electron'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  3</span> </span><span class="KEYW">const</span><span class="WHIT"> </span><span class="NAME">url</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="NAME">require</span><span class="PUNC">(</span><span class="STRN">'url'</span><span class="PUNC">)</span><span class="PUNC">;</span><span class="WHIT">
+<span class='line'>  4</span> 
+<span class='line'>  5</span> </span><span class="COMM">// function for creating a window</span><span class="WHIT">
+<span class='line'>  6</span> </span><span class="KEYW">function</span><span class="WHIT"> </span><span class="NAME">createWindow</span><span class="PUNC">(</span><span class="PUNC">)</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'>  7</span> </span><span class="WHIT">	</span><span class="NAME">win</span><span class="WHIT"> </span><span class="PUNC">=</span><span class="WHIT"> </span><span class="KEYW">new</span><span class="WHIT"> </span><span class="NAME">BrowserWindow</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="NAME">width</span><span class="PUNC">:</span><span class="NUMB">800</span><span class="PUNC">,</span><span class="NAME">height</span><span class="PUNC">:</span><span class="NUMB">624</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'>  8</span> 
+<span class='line'>  9</span> </span><span class="WHIT">		</span><span class="NAME">win.loadURL</span><span class="PUNC">(</span><span class="NAME">url.format</span><span class="PUNC">(</span><span class="PUNC">{</span><span class="WHIT">
+<span class='line'> 10</span> </span><span class="WHIT">			</span><span class="NAME">pathname</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="NAME">path.join</span><span class="PUNC">(</span><span class="NAME">__dirname</span><span class="PUNC">,</span><span class="STRN">'index.html'</span><span class="PUNC">)</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 11</span> </span><span class="WHIT">			</span><span class="NAME">protocol</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="STRN">'file:'</span><span class="PUNC">,</span><span class="WHIT">
+<span class='line'> 12</span> </span><span class="WHIT">			</span><span class="NAME">slashes</span><span class="PUNC">:</span><span class="WHIT"> </span><span class="KEYW">true</span><span class="WHIT">
+<span class='line'> 13</span> </span><span class="WHIT">		</span><span class="PUNC">}</span><span class="PUNC">)</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 14</span> </span><span class="PUNC">}</span><span class="WHIT">
+<span class='line'> 15</span> 
+<span class='line'> 16</span> </span><span class="NAME">app.on</span><span class="PUNC">(</span><span class="STRN">'ready'</span><span class="PUNC">,</span><span class="NAME">createWindow</span><span class="PUNC">)</span><span class="WHIT">
+<span class='line'> 17</span> </span></pre></body></html>

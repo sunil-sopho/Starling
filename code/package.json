@@ -7,6 +7,7 @@
     "doc": "docs"
   },
   "scripts": {
+    "generate-docs": "./node_modules/.bin/jsdoc -c ./jsdoc.json",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "electron .",
     "dev": "electron . --debug"
@@ -21,10 +22,12 @@
     "Js"
   ],
   "dependencies": {
+    "docdash": "file:docdash",
     "electron-settings": "^3.0.7",
     "electron-shortcut-normalizer": "latest",
     "glob": "latest",
-    "highlight.js": "latest"
+    "highlight.js": "latest",
+    "jsdoc": "^3.5.5"
   },
   "standard": {
     "env": {

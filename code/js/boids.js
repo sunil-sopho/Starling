@@ -1,9 +1,9 @@
-var boid = (pos, vel, rot)<>{
+var boid = (pos, vel, rot) =>{
 	this.pos = new Vector(pos.x, pos.y, pos.z);
 	this.vel = new Vector(vel.x, vel.y, vel.z);
 	this.rot = new THREE.Euler(rot.x, rot.y, rot.z);	
 
-	coDist = 18
+	coDist = 20
 	sepDist = 10
 	aligDist = 15
 }
