@@ -4,6 +4,9 @@
 
 var Stats = function () {
 
+	// testing if workign
+	console.log("hi here in stats")
+
 	var startTime = Date.now(), prevTime = startTime;
 	var ms = 0, msMin = Infinity, msMax = 0;
 	var fps = 0, fpsMin = Infinity, fpsMax = 0;

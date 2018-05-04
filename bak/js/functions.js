@@ -1,170 +1,3 @@
-<html>
-	<head>
-		<title>Boids.js</title>
-		<style>
-			body { margin: 0; }
-			canvas { width: 100%; height: 100% }
-			
-			#menu {
-				position: absolute;
-			 	top: 10px;
-			 	left: 5px;
-				width: 200px;
-			}
-			
-			.lab {
-				color: #ff1111;
-			}
-			
-			#menu2 {
-				position: absolute;
-				top: 10px;
-				left: 155px;
-				width: 200px;
-			}
-			
-		</style>
-	</head>
-	<body>
-		<div id="menu" onmouseenter="disableOrbit()" onmouseleave="enableOrbit()">
-			<label class="lab">Separation Force</label>
-			<output for=SepForce id=sfout>1</output>
-			<br><input type=range min=0 max=300 value=100 id=SepForce>
-			
-			<br><label class="lab">Cohesion Force</label>
-			<output for=CohForce id=cfout>0.6</output>
-			<br><input type=range min=0 max=300 value=80 id=CohForce>  
-			
-			<br><label class="lab">Alignment Force</label>
-			<output for=AliForce id=afout>1.6</output>
-			<br><input type=range min=0 max=300 value=160 id=AliForce>
-			
-			
-			
-			<br><br><label class="lab">Centre Force</label>
-			<output for=CenForce id=tfout>0.1</output>
-			<br><input type=range min=0 max=100 value=35 id=CenForce>
-			
-			
-			
-			<br><br><label class="lab">Max Speed</label>
-			<output for=MaxSpeed id=speedout>0.5</output>
-			<br><input type=range min=0 max=200 value=50 id=MaxSpeed>
-			
-			<br><label class="lab">Acceleration</label>
-			<output for=Acceleration id=accelout>0.5</output>
-			<br><input type=range min=0 max=20 value=3 id=Acceleration>
-			
-		</div>
-		
-		<div id="menu2" onmouseenter="disableOrbit()" onmouseleave="enableOrbit()">
-			<label class="lab">Separation Distance</label>
-			<output for=SepDist id=sdout>1</output>
-			<br><input type=range min=0 max=100 value=10 id=SepDist>
-			
-			<br><label class="lab">Cohesion Distance</label>
-			<output for=CohDist id=cdout>0.6</output>
-			<br><input type=range min=0 max=100 value=25 id=CohDist>  
-			
-			<br><label class="lab">Alignment Distance</label>
-			<output for=AliDist id=adout>1.6</output>
-			<br><input type=range min=0 max=100 value=15 id=AliDist>
-			
-			
-			
-			<br><br><label class="lab">Boid Count</label>
-			<output for=BoidCount id=BoidCountLabel>200</output>
-			<br><input type=range min=0 max=1000 value=200 id=BoidCount onmouseup="boidMouseUp()">
-			
-			<br><label class="lab">Shark Count</label>
-			<output for=SharkCount id=SharkCountLabel>2</output>
-			<br><input type=range min=0 max=20 value=2 id=SharkCount onmouseup="sharkMouseUp()">
-			
-			
-			
-			<br><br><input onclick="changeShark()" type="checkbox" 
-						id=folShark>Follow a Shark</input>
-			<br><input onclick="changeBoid()"
-						type="checkbox" id=folBoid>Follow a Boid</input>
-		</div>
-		
-		<script type='text/javascript'>
-			var trackingShark = false;
-			var trackingBoid = false;
-			
-			function changeShark() { 
-	    		trackingShark = !trackingShark;
-			}	
-			
-			function changeBoid() { 
-    			trackingBoid = !trackingBoid;
-			}
-		</script>
-		
-		<script>
-			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-			
-			ga('create', 'UA-63376867-1', 'auto');
-			ga('send', 'pageview');
-		</script>
-		
-		<script src="js/three.min.js"></script>
-		<script src="js/stats.js"></script>
-		<script src="js/OrbitControls.js"></script>
-		<script src="js/Detector.js"></script>
-		<script src="js/FirstPersonControls.js"></script>
-		<script src="js/KeyboardState.js"></script>
-		<script src="js/Projector.js"></script>
-		<script src="js/THREEx.FullScreen.js"></script>
-		
-		<script src="js/Vector.js"></script>
-		<script src="js/Boid.js"></script>
-		
-		<script type='text/javascript' > 
-  			var sepFac = 1; 
-  			var cohFac = 0.7;
-  			var aliFac = 1.6;
-  			var tarFac = 0.3;
-  			
-  			var sharkSepFac = 5;
-  			var sharkCohFac = 0.01;
-  			var sharkAliFac = 0.01;
-  			
-  			var sepDist = 10;
-  			var sharkSepDist = sepDist * 2;
-  			var cohDist = 25;
-  			var aliDist = 15;
-  			
-  			var maxSpeed = .5;
-  			var sharkMaxSpeed = maxSpeed * 3;
-  			var maxForce = 0.003;
-  			var sharkMaxForce = maxForce * 3;
-  			
-  			var boidCount = 200, sharkCount = 2;
-  			
-		</script>
-		
-		<script>
-
-var camera, controls, scene, renderer, loader, stats, clock;
-
-var boids, sharks, bgroup, sgroup, target, targetvel, goahead, keyboard;
-
-var boidGeometry, boidMaterial, sharkGeometry, sharkMaterial;
-
-goahead = false;
-
-init();
-render();
-
-function animate() {
-	requestAnimationFrame(animate);
-	render();
-}
-
 function boidMouseUp() {
 	boidCount = (document.querySelector('#BoidCount').value);
 	document.querySelector('#BoidCountLabel').value = boidCount;
@@ -207,66 +40,6 @@ function enableOrbit() {
 	controls.enabled = true;
 }
 
-function init() {
-	fixLayout();
-	
-	THREEx.FullScreen.bindKey({ charCode : 'm'.charCodeAt(0) });
-	
-	trackingShark = false;
-	trackingBoid = false;
-	mouse = new THREE.Vector2();
-	
-	clock = new THREE.Clock();
-	
-	count = 0;
-	
-	camera = new THREE.PerspectiveCamera(60, window.innerWidth / window.innerHeight, 1, 1000);
-	camera.position.z = 100;
-
-	setupOrbitControls();
-
-	scene = new THREE.Scene();
-	scene.fog = new THREE.FogExp2(0xcccccc, 0.0027);
-
-	keyboard = new THREEx.KeyboardState();
-	
-	var light1 = new THREE.DirectionalLight(0xeeeeee);
-	light1.position.x = Math.random() - 0.5;
-	light1.position.y = Math.random() - 0.5;
-	light1.position.z = Math.random() - 0.5;
-	light1.position.normalize();
-	light1.intensity = 1.5;
-	scene.add(light1);
-	
-	var light2 = new THREE.DirectionalLight(0xeeeeee);
-	light2.position.x = Math.random() - 0.5;
-	light2.position.y = Math.random() - 0.5;
-	light2.position.z = Math.random() - 0.5;
-	light2.position.normalize();
-	light2.intensity = 1;
-	scene.add(light2);
-	
-	renderer = new THREE.WebGLRenderer();
-	renderer.setClearColor(scene.fog.color);
-	renderer.setPixelRatio(window.devicePixelRatio);
-	renderer.setSize(window.innerWidth, window.innerHeight);
-	document.body.appendChild(renderer.domElement);
-
-	stats = new Stats();
-	stats.domElement.style.position = 'absolute';
-	stats.domElement.style.right = '0px';
-	stats.domElement.style.bottom = '0px';
-	document.body.appendChild(stats.domElement);
-	
-	window.addEventListener('resize', onWindowResize, false);
-	
-	target = new Vector(0, 0, 0);
-	loadBoids1();
-	
-	addContext();
-
-	animate();
-}
 
 function fixLayout() {
 	var div = document.getElementById('menu2');
@@ -339,7 +112,7 @@ function loadBoids1(amount) {
 	loader = new THREE.JSONLoader();
 	loader2 = new THREE.JSONLoader();
 	
-	loader.load('models/shark.json', function (geometry) {
+	loader.load('../models/shark.json', function (geometry) {
 		THREE.GeometryUtils.center(geometry);
 		sharkGeometry = geometry;
 		sharkMaterial = new THREE.MeshLambertMaterial({color: 0x4444cc});
@@ -378,7 +151,7 @@ function loadBoids1(amount) {
 }
 
 function loadBoids2() {
-	loader2.load('models/vector.json', function (geometry) {
+	loader2.load('../models/vector.json', function (geometry) {
 		THREE.GeometryUtils.center(geometry);
 		boidGeometry = geometry;
 		boidMaterial = new THREE.MeshLambertMaterial({color: 0xcc4444});
@@ -617,8 +390,3 @@ function boidsUpdate() {
 		}
 	}
 }
-		</script>
-		
-	</body>
-	</head>
-</html>
